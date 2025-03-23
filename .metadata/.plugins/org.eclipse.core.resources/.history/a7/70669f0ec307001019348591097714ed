@@ -1,0 +1,30 @@
+package com.user.service.impl;
+
+import java.util.List;
+
+import com.user.entity.User;
+import com.user.service.UserService;
+
+public class UserServiceImpl implements UserService {
+
+	@Override
+	public User saveUser(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<User> getAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public User getUser(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+
+
+}
