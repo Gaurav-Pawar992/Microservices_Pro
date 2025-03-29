@@ -17,6 +17,7 @@ import com.user.entity.Hotel;
 import com.user.entity.Rating;
 import com.user.entity.User;
 import com.user.exceptions.ResourceNotFoundException;
+import com.user.external.service.HotelService;
 import com.user.repository.UserRepository;
 import com.user.service.UserService;
 
@@ -30,6 +31,12 @@ public class UserServiceImpl implements UserService {
 	private RestTemplate restTemplate;
 	
 	private Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+	
+	
+	// Added Dependency Injection For Feign Client
+	
+	@Autowired
+	private HotelService hotelService;
 	
 	@Override
 	public User saveUser(User user) {
@@ -73,11 +80,17 @@ public class UserServiceImpl implements UserService {
 			
 			//http://localhost:8082/hotels/f62c70d7-7d9f-43ee-9447-eff9c01d7070
 			
-			ResponseEntity<Hotel> entity = restTemplate.getForEntity("http://HOTELSERVICE/hotels/"+rating.getHotelId(), Hotel.class);
 			
-			Hotel hotel = entity.getBody();
+			// Using RestTemplate
 			
-			logger.info("Response Status Code : " , entity.getStatusCode());
+			//ResponseEntity<Hotel> entity = restTemplate.getForEntity("http://HOTELSERVICE/hotels/"+rating.getHotelId(), Hotel.class);
+			//Hotel hotel = entity.getBody();
+			// logger.info("Response Status Code : " , entity.getStatusCode());
+			
+			// Using Feign Client
+			
+			Hotel hotel = hotelService.getHotel(rating.getHotelId());
+			
 			
 			
 			// Set Hotel to Rating
